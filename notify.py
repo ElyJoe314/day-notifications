@@ -30,7 +30,7 @@ def send_notification(today):
         message = "There is no school today"
 
     
-    title = datetime.now().strftime("%B %-d, %Y")
+    title = datetime.now().strftime("%B %d, %Y").replace(" 0", " ")
 
     response = requests.post(
         f"https://ntfy.sh/{TOPIC}",
