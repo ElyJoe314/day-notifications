@@ -14,18 +14,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Install dependencies
-        run: pip install requests
-
       - name: Run notification
         env:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
-        run: python notify.py
+        run: |
+          pip install -r requirements.txt
+          python notify.py
 
 # name: Daily School Notification
 
