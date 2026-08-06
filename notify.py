@@ -57,8 +57,8 @@ def sendNotification (msg):
     #return message
 
 def main():
-    today = datetime.now().strftime("%Y-%m-%d")
-    # today = "2026-09-07"
+    # today = datetime.now().strftime("%Y-%m-%d")
+    today = "2026-09-07"
 
     message = getMessage(today)
     sendNotification(message)
