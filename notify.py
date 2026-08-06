@@ -1,9 +1,7 @@
 import requests
 import json
-import os
 from datetime import datetime
 
-# TOPIC = os.environ["NTFY_TOPIC"]
 TOPIC = "whsCalendarSchedule"
 
 # Load JSON file
@@ -11,50 +9,60 @@ with open("schooldays.json", "r") as file:
     school_days = json.load(file)
 
 
-def get_day_type(date):
+def getDayType(date):
+    matches = [] # empty array
+
     for day_type, dates in school_days.items():
         if date in dates:
-            return day_type
-    
-    return "Unknown"
+            matches.append(day_type)  # find matches in JSON file for the date parameter
 
+    return matches # return array
 
-def send_notification(today):
+def getMessage(today):
+    day_types = getDayType(today) # get day types of today's day
 
-    day_type = get_day_type(today)
-
-    if day_type == "A" or day_type == "B":
-        message = f"Today is a {day_type} day"
-    elif day_type == "FINALS":
-        message = f"There are {day_type} today, Good Luck!"
+    if not day_types or "no school" in day_types: # if no types or no school then the output is no school
+        message = "There is no school today" 
+    elif "FINALS" in day_types: # if there are finals 
+        message = "There are FINALS today, Good Luck!"
     else:
-        message = "There is no school today"
+        ordered_types = [] # empty array
+        for i in ["Collab", "Min", "A", "B"]: # repeat for collab, min, a, and b
+            if i in day_types: # if collab, min, a, or b are in day_types
+                ordered_types.append(i) # add to types array
 
-    
-    title = datetime.now().strftime("%B %d, %Y").replace(" 0", " ")
+        message = f"Today is a {' '.join(ordered_types)} day" # combined message
 
+    return message
+
+def sendNotification (msg):
+    title = datetime.now().strftime("%B %-d, %Y") # today's date
+
+    # send notification
     response = requests.post(
         f"https://ntfy.sh/{TOPIC}",
-        data=message,
+        data=msg,
         headers={
             "Title": title,
             "Priority": "urgent"
         }
     )
-    
-    response.raise_for_status()
-    print("Notification sent!")
 
-    return message
+    # console message
+    if response.status_code == 200:
+        print("Notification sent!")
+    else:
+        print("Failed:", response.status_code)
+
+    #return message
 
 def main():
-    # today = datetime.now().strftime("%Y-%m-%d")
-    # # today = "2026-09-09"
-    # print(send_notification(today))
-    # send_notification(today)
-    
     today = datetime.now().strftime("%Y-%m-%d")
-    print(send_notification(today))
+    # today = "2026-09-07"
+
+    message = getMessage(today)
+    sendNotification(message)
+    
 
 if __name__ == "__main__":
     main()
