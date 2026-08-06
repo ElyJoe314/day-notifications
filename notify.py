@@ -40,21 +40,20 @@ def send_notification(today):
             "Priority": "urgent"
         }
     )
-
-    if response.status_code == 200:
-        print("Notification sent!")
-    else:
-        print("Failed:", response.status_code)
+    
+    response.raise_for_status()
+    print("Notification sent!")
 
     return message
 
 def main():
-    today = datetime.now().strftime("%Y-%m-%d")
-    # today = "2026-09-09"
-
-    print(send_notification(today))
-    send_notification(today)
+    # today = datetime.now().strftime("%Y-%m-%d")
+    # # today = "2026-09-09"
+    # print(send_notification(today))
+    # send_notification(today)
     
+    today = datetime.now().strftime("%Y-%m-%d")
+    print(send_notification(today))
 
 if __name__ == "__main__":
     main()
