@@ -1,0 +1,67 @@
+name: Daily School Notification
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+
+  workflow_dispatch:
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run notification
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: python notify.py
+
+# name: Daily School Notification
+
+# on:
+#   schedule:
+#     # 7:00 AM Pacific Daylight Time (UTC-7)
+#     # Change to 15:00 during Standard Time (UTC-8)
+#     - cron: "17 22 * * 1-5"
+
+#   workflow_dispatch:
+
+# jobs:
+#   notify:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v4
+
+#       - name: Set up Python
+#         uses: actions/setup-python@v5
+#         with:
+#           python-version: "3.12"
+
+#       - name: Install dependencies
+#         run: |
+#           python -m pip install --upgrade pip
+#           pip install requests
+
+#       - name: Verify files
+#         run: |
+#           ls -la
+#           test -f notify.py
+#           test -f schooldays.json
+
+#       - name: Run notification script
+#         env:
+#           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+#         run: python notify.py
