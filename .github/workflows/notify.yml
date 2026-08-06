@@ -4,7 +4,7 @@ on:
   schedule:
     # 7:00 AM Pacific Daylight Time (UTC-7)
     # Change to 15:00 during Standard Time (UTC-8)
-    - cron: "15 22 * * 1-5"
+    - cron: "17 22 * * 1-5"
 
   workflow_dispatch:
 
