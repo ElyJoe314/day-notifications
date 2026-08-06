@@ -2,7 +2,7 @@ name: School Notification
 
 on:
   schedule:
-    - cron: "30 14 * * *"
+    - cron: "30 14 * * 1-5"
 
   workflow_dispatch:
 
