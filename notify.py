@@ -3,7 +3,8 @@ import json
 import os
 from datetime import datetime
 
-TOPIC = os.environ["NTFY_TOPIC"]
+# TOPIC = os.environ["NTFY_TOPIC"]
+TOPIC = "whsCalendarSchedule"
 
 # Load JSON file
 with open("schooldays.json", "r") as file:
