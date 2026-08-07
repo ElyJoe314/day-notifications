@@ -55,5 +55,5 @@ def main():
     message = getMessage(today)
     sendNotification(message)
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
