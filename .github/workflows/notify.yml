@@ -2,7 +2,7 @@ name: School Day Notification
 
 on:
   schedule:
-    - cron: '55 4 * * *'   # every 5 minutes (UTC)
+    - cron: '20 5 * * *'
  # workflow_dispatch:         # allows manual trigger for testing
 
 jobs:
