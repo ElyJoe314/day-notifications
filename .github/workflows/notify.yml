@@ -23,4 +23,4 @@ jobs:
           pip install tzdata
 
       - name: Run script
-        run: python your_script.py
+        run: python notify.py
